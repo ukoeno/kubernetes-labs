@@ -1,11 +1,23 @@
-# Minikube Setup
+# Minikube Setup on Windows
 
-Status: In Progress
+**Status**: Completed
 
 ## Objective
-
-- Install Minikube
-- Install kubectl
-- Start local Kubernetes cluster
+- Install Minikube and kubectl
+- Start a local Kubernetes cluster
 - Deploy first pod
-- Expose pod and access application
+- Expose the pod and access the application
+
+## Prerequisites
+- Windows 10 or 11
+- Chocolatey package manager
+- Administrator rights
+- (Optional) Docker Desktop or Hyper-V enabled
+
+## Installation
+
+### 1. Install Minikube + kubectl
+
+```powershell
+# Run in PowerShell as Administrator
+choco install minikube kubernetes-cli -y
