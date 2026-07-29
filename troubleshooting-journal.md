@@ -42,6 +42,30 @@ Under investigation.
 
 ### Resolution
 
+## Minikube Virtualization Error
+
+Date: 2026-07-29
+
+Command:
+minikube start
+
+Error:
+Failed to start virtualbox VM.
+This computer doesn't have VT-X/AMD-v enabled.
+
+Initial Hypothesis:
+Hardware virtualization disabled.
+
+Investigation:
+Task Manager → Performance → CPU
+
+Result:
+Virtualization = Enabled
+
+Conclusion:
+The BIOS virtualization explanation appears incorrect.
+Further investigation required.
+
 Pending.
 
 ### Lesson Learned
