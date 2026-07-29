@@ -71,3 +71,21 @@ Pending.
 ### Lesson Learned
 
 Pending.
+
+### Investigation 3
+
+Command:
+VBoxManage list hostinfo
+
+Results:
+- Processor supports HW virtualization: yes
+- Processor supports nested paging: yes
+- Operating system: Windows 11
+
+Conclusion:
+VirtualBox can detect hardware virtualization.
+The original Minikube message claiming VT-X/AMD-v is disabled appears inaccurate.
+
+Additional Observation:
+Only 1259 MB of RAM was available at the time of testing.
+Resource constraints may be contributing to the startup failure.
