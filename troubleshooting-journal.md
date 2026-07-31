@@ -101,5 +101,35 @@ Evidence contradicts Minikube's claim that VT-X/AMD-v is disabled.
 
 Current Hypothesis:
 The issue is related to VirtualBox interaction with Windows virtualization/security features rather than BIOS settings.
+
+## 2026-07-29 - Minikube VirtualBox Startup Failure
+
+### Command
+
+minikube start --driver=virtualbox
+
+### Error
+
+This computer doesn't have VT-X/AMD-v enabled.
+
+### Initial Hypothesis
+
+Virtualization disabled in BIOS.
+
+### Investigation
+
+- Task Manager reported Virtualization = Enabled.
+- VBoxManage reported Processor supports HW virtualization = yes.
+- Windows systeminfo reported a hypervisor was detected.
+- Hypervisor Enforced Code Integrity was enabled.
+
+### Conclusion
+
+Evidence contradicted the original error message.
+The issue appears related to VirtualBox interaction with Windows virtualization/security features rather than BIOS virtualization being disabled.
+
+### Next Step
+
+Test Minikube using Docker Desktop and the Docker driver.
 Only 1259 MB of RAM was available at the time of testing.
 Resource constraints may be contributing to the startup failure.
