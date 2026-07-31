@@ -133,3 +133,19 @@ The issue appears related to VirtualBox interaction with Windows virtualization/
 Test Minikube using Docker Desktop and the Docker driver.
 Only 1259 MB of RAM was available at the time of testing.
 Resource constraints may be contributing to the startup failure.
+
+### Investigation 8
+
+Command:
+docker version
+
+Result:
+Docker client installed successfully.
+
+Error:
+Failed to connect to Docker API.
+Docker Desktop Linux engine not available.
+
+Conclusion:
+Docker engine is not running.
+Further investigation required.
