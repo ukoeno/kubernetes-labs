@@ -86,6 +86,20 @@ Conclusion:
 VirtualBox can detect hardware virtualization.
 The original Minikube message claiming VT-X/AMD-v is disabled appears inaccurate.
 
-Additional Observation:
+### Investigation 5
+
+Command:
+systeminfo
+
+Results:
+- Hypervisor detected
+- Hypervisor Enforced Code Integrity enabled
+
+Conclusion:
+Virtualization is active on the system.
+Evidence contradicts Minikube's claim that VT-X/AMD-v is disabled.
+
+Current Hypothesis:
+The issue is related to VirtualBox interaction with Windows virtualization/security features rather than BIOS settings.
 Only 1259 MB of RAM was available at the time of testing.
 Resource constraints may be contributing to the startup failure.
