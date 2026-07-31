@@ -149,3 +149,15 @@ Docker Desktop Linux engine not available.
 Conclusion:
 Docker engine is not running.
 Further investigation required.
+
+### Investigation 9
+
+Command:
+docker ps
+
+Result:
+Docker Engine responded successfully.
+
+Conclusion:
+Docker Desktop and WSL2 are functioning correctly.
+The Docker driver can now be tested with Minikube.
