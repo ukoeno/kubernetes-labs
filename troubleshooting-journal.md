@@ -56,7 +56,7 @@ This computer doesn't have VT-X/AMD-v enabled.
 Initial Hypothesis:
 Hardware virtualization disabled.
 
-Investigation:
+### Investigation 1:
 Task Manager → Performance → CPU
 
 Result:
@@ -72,7 +72,7 @@ Pending.
 
 Pending.
 
-### Investigation 3
+### Investigation 2
 
 Command:
 VBoxManage list hostinfo
@@ -86,7 +86,7 @@ Conclusion:
 VirtualBox can detect hardware virtualization.
 The original Minikube message claiming VT-X/AMD-v is disabled appears inaccurate.
 
-### Investigation 5
+### Investigation 3
 
 Command:
 systeminfo
@@ -116,7 +116,7 @@ This computer doesn't have VT-X/AMD-v enabled.
 
 Virtualization disabled in BIOS.
 
-### Investigation
+### Investigation 4
 
 - Task Manager reported Virtualization = Enabled.
 - VBoxManage reported Processor supports HW virtualization = yes.
@@ -134,7 +134,7 @@ Test Minikube using Docker Desktop and the Docker driver.
 Only 1259 MB of RAM was available at the time of testing.
 Resource constraints may be contributing to the startup failure.
 
-### Investigation 8
+### Investigation 5
 
 Command:
 docker version
@@ -150,7 +150,7 @@ Conclusion:
 Docker engine is not running.
 Further investigation required.
 
-### Investigation 9
+### Investigation 6
 
 Command:
 docker ps
