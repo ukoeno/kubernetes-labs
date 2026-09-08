@@ -61,4 +61,19 @@ View the kubeconfig configuration:
 
 ```bash
 kubectl config view
-```
+
+Kubernetes API Server
+
+The Kubernetes API Server is the central management component of the Kubernetes control plane. It exposes the Kubernetes API and acts as the entry point for all communication with the cluster. It is responsible for authentication, authorization, request validation, and updating cluster state in etcd.
+
+etcd
+
+etcd is a distributed key-value database used by Kubernetes to store the cluster's state and configuration data. It stores information about Kubernetes objects such as nodes, pods, deployments, services, and namespaces. The Kubernetes API Server reads from and writes to etcd to maintain the cluster's desired state.
+
+Kubernetes Scheduler
+
+The Kubernetes Scheduler is a control plane component responsible for assigning Pods to worker nodes. It watches for newly created Pods that do not yet have a node assigned, evaluates available resources and scheduling constraints, and selects the most appropriate node on which the Pod should run.
+
+Kubernetes Controller Manager
+
+The Kubernetes Controller Manager is a control plane component responsible for monitoring the cluster and ensuring that the actual state matches the desired state. It continuously watches Kubernetes objects and takes corrective actions when differences are detected, such as creating replacement Pods or responding to node failures.```
