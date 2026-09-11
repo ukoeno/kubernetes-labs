@@ -77,3 +77,20 @@ The Kubernetes Scheduler is a control plane component responsible for assigning 
 Kubernetes Controller Manager
 
 The Kubernetes Controller Manager is a control plane component responsible for monitoring the cluster and ensuring that the actual state matches the desired state. It continuously watches Kubernetes objects and takes corrective actions when differences are detected, such as creating replacement Pods or responding to node failures.```
+
+Worker Node Components
+
+1. kubelet
+   - Watches for Pod assignments
+   - Talks to API Server
+   - Instructs container runtime
+
+2. Container Runtime
+   - Pulls images
+   - Creates containers
+   - Runs containers
+
+3. kube-proxy
+   - Handles networking
+   - Creates Service networking rules
+   - Enables Pod-to-Pod and Service communication
