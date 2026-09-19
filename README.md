@@ -94,3 +94,248 @@ Worker Node Components
    - Handles networking
    - Creates Service networking rules
    - Enables Pod-to-Pod and Service communication
+
+   # Kubernetes Services, Labels and Selectors
+
+## Labels
+
+Labels are key-value pairs attached to Kubernetes objects. They help identify, organize, and group resources.
+
+Example:
+
+```yaml
+metadata:
+  labels:
+    app: nginx
+```
+
+* Label Key: `app`
+* Label Value: `nginx`
+
+Think of labels as tags or sticky notes attached to Kubernetes objects.
+
+---
+
+## Selectors
+
+Selectors are used to find Kubernetes objects that have matching labels.
+
+Example:
+
+```yaml
+selector:
+  app: nginx
+```
+
+This selector tells Kubernetes:
+
+> Find all objects with the label `app=nginx`.
+
+### Label and Selector Relationship
+
+```text
+Service Selector
+app=nginx
+      |
+      v
+Pod A app=nginx  ✅
+Pod B app=nginx  ✅
+Pod C app=mysql  ❌
+```
+
+Only Pods whose labels match the selector are selected.
+
+---
+
+## Services
+
+A Service provides a stable endpoint for accessing Pods.
+
+Pods are temporary and their IP addresses can change when they are recreated. A Service remains stable and routes traffic to the correct Pods.
+
+### Why Services are Needed
+
+```text
+Pod
+- Temporary
+- Can be replaced
+- IP address can change
+
+Service
+- Stable
+- Long-lived
+- Routes traffic to Pods
+```
+
+Applications communicate with Services instead of directly using Pod IP addresses.
+
+---
+
+## How a Service Finds Pods
+
+A Service uses a selector to find matching Pods.
+
+Example:
+
+```yaml
+spec:
+  selector:
+    app: nginx
+```
+
+Pods:
+
+```yaml
+metadata:
+  labels:
+    app: nginx
+```
+
+The Service automatically discovers and routes traffic to matching Pods.
+
+---
+
+## Service YAML Example
+
+```yaml
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: nginx-service
+
+spec:
+  selector:
+    app: nginx
+
+  ports:
+  - port: 80
+    targetPort: 80
+```
+
+### Components
+
+#### selector
+
+```yaml
+selector:
+  app: nginx
+```
+
+Finds Pods with the label:
+
+```yaml
+app: nginx
+```
+
+#### port
+
+```yaml
+port: 80
+```
+
+The port exposed by the Service.
+
+Clients connect to the Service using this port.
+
+#### targetPort
+
+```yaml
+targetPort: 80
+```
+
+The port on the Pod/container that receives the traffic.
+
+---
+
+## port vs targetPort
+
+Example:
+
+```yaml
+port: 80
+targetPort: 8080
+```
+
+Traffic flow:
+
+```text
+Client
+   |
+   | 80
+   v
+Service
+   |
+   | 8080
+   v
+Container Application
+```
+
+The client connects to port 80 on the Service, and the Service forwards traffic to port 8080 on the container.
+
+---
+
+## Service Types
+
+### ClusterIP (Default)
+
+Used for internal communication within the Kubernetes cluster.
+
+```text
+Pod A
+   |
+   v
+ClusterIP Service
+   |
+   v
+Pod B
+```
+
+Accessible only from inside the cluster.
+
+---
+
+### NodePort
+
+Exposes the Service on a port of each Worker Node.
+
+Example:
+
+```text
+NodeIP:30080
+```
+
+Allows external access through the node's IP address.
+
+---
+
+### LoadBalancer
+
+Used mainly in cloud environments such as AWS, Azure, and GCP.
+
+```text
+Internet
+   |
+Load Balancer
+   |
+Service
+   |
+Pods
+```
+
+Provides external access through a cloud load balancer.
+
+---
+
+## Key Takeaways
+
+* Labels identify Kubernetes objects.
+* Selectors find objects with matching labels.
+* Services provide stable access to Pods.
+* Services use selectors to locate backend Pods.
+* `port` is the Service port.
+* `targetPort` is the container port receiving traffic.
+* ClusterIP is internal only.
+* NodePort exposes a Service through a node.
+* LoadBalancer exposes a Service externally through a cloud load balancer.
+
