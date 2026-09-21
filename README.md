@@ -339,3 +339,271 @@ Provides external access through a cloud load balancer.
 * NodePort exposes a Service through a node.
 * LoadBalancer exposes a Service externally through a cloud load balancer.
 
+# Kubernetes Deployments and ReplicaSets
+
+## Why Deployments Exist
+
+Creating a Pod directly is not ideal for production environments because Pods are temporary.
+
+Example:
+
+```yaml
+apiVersion: v1
+kind: Pod
+```
+
+If the Pod is deleted, Kubernetes will not automatically recreate it unless another object manages it.
+
+Deployments provide a higher-level mechanism for managing applications.
+
+---
+
+## Deployment
+
+A Deployment is a Kubernetes object that manages application releases and updates.
+
+Responsibilities:
+
+* Creates and manages ReplicaSets
+* Supports rolling updates
+* Supports rollbacks
+* Maintains the desired application configuration
+
+Think:
+
+```text
+Deployment = Application Manager
+```
+
+---
+
+## ReplicaSet
+
+A ReplicaSet ensures that the desired number of Pods are running.
+
+Example:
+
+```yaml
+replicas: 3
+```
+
+If one Pod is deleted:
+
+```text
+Desired Pods = 3
+Actual Pods  = 2
+```
+
+The ReplicaSet creates a replacement Pod.
+
+Think:
+
+```text
+ReplicaSet = Pod Count Manager
+```
+
+---
+
+## Relationship Between Deployment and ReplicaSet
+
+```text
+Deployment
+     |
+     v
+ReplicaSet
+     |
+     v
+Pods
+     |
+     v
+Containers
+```
+
+Deployment manages ReplicaSets.
+
+ReplicaSets maintain the required number of Pods.
+
+---
+
+## Deployment YAML Example
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nginx-deployment
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+```
+
+---
+
+## Important Fields
+
+### replicas
+
+```yaml
+replicas: 3
+```
+
+Kubernetes attempts to keep three Pods running.
+
+---
+
+### selector
+
+```yaml
+selector:
+  matchLabels:
+    app: nginx
+```
+
+The Deployment manages Pods matching these labels.
+
+---
+
+### template
+
+```yaml
+template:
+```
+
+The Pod blueprint used when creating new Pods.
+
+Every Pod created from the template receives the labels and container configuration defined inside it.
+
+---
+
+## Rolling Updates
+
+Suppose the application image changes:
+
+```yaml
+image: myapp:v1
+```
+
+to
+
+```yaml
+image: myapp:v2
+```
+
+The Deployment performs a rolling update.
+
+Example:
+
+```text
+Old ReplicaSet (v1)
+      ↓
+New ReplicaSet (v2)
+```
+
+Pods are gradually replaced instead of stopping everything at once.
+
+Benefits:
+
+* Reduced downtime
+* Controlled upgrades
+* Easier recovery
+
+---
+
+## Rollbacks
+
+If the new version fails:
+
+```text
+v2 ❌
+```
+
+The Deployment can roll back to the previous version:
+
+```text
+v1 ✅
+```
+
+Example command:
+
+```bash
+kubectl rollout undo deployment/nginx-deployment
+```
+
+---
+
+## Common Commands
+
+### View Deployments
+
+```bash
+kubectl get deployments
+```
+
+or
+
+```bash
+kubectl get deploy
+```
+
+### View ReplicaSets
+
+```bash
+kubectl get rs
+```
+
+### View Pods
+
+```bash
+kubectl get pods
+```
+
+### Deployment Details
+
+```bash
+kubectl describe deployment nginx-deployment
+```
+
+### Check Rollout Status
+
+```bash
+kubectl rollout status deployment/nginx-deployment
+```
+
+### View Rollout History
+
+```bash
+kubectl rollout history deployment/nginx-deployment
+```
+
+### Roll Back
+
+```bash
+kubectl rollout undo deployment/nginx-deployment
+```
+
+---
+
+## Key Takeaways
+
+* Deployments manage application releases.
+* ReplicaSets maintain the desired number of Pods.
+* Deployments create and manage ReplicaSets.
+* ReplicaSets create replacement Pods when needed.
+* Deployments support rolling updates and rollbacks.
+* Most production applications are deployed using Deployments rather than standalone Pods.
+
