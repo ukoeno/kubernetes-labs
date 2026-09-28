@@ -607,3 +607,24 @@ kubectl rollout undo deployment/nginx-deployment
 * Deployments support rolling updates and rollbacks.
 * Most production applications are deployed using Deployments rather than standalone Pods.
 
+## Kubernetes API Server
+
+## etcd
+
+## Kubernetes Scheduler
+
+## Kubernetes Controller Manager
+
+## kubelet
+
+## Container Runtime
+
+## kube-proxy
+
+## Pods
+
+## ReplicaSet
+
+## Deployment
+
+## Service
