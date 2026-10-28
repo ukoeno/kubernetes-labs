@@ -1,0 +1,13 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: command-args-demo
+spec:
+  restartPolicy: Never
+  containers:
+    - name: demo
+      image: busybox:1.36
+      command: ["echo"]
+      args: ["Kubernetes commands and arguments"]
+
